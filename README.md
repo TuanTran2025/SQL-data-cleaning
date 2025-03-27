@@ -55,3 +55,22 @@ UPDATE club_member_info_cleansed SET age = 'NULL' WHERE age = '';
 UPDATE club_member_info_cleansed SET martial_status = 'divorced' WHERE martial_status  = 'divored';
 UPDATE club_member_info_cleansed SET martial_status = 'unknown' WHERE martial_status  = '';
 ```
+### Fixing the Phone_number & Job_title
+```sql
+UPDATE club_member_info_cleansed SET phone = 'unknown' WHERE LENGTH(phone) < 12;
+UPDATE club_member_info_cleansed SET job_title = 'NULL' WHERE job_title = '';
+```
+### Fixing the Membership_date
+```sql
+UPDATE club_member_info_cleansed 
+SET membership_date = '0' || SUBSTR(membership_date, 1, 2) || SUBSTR(membership_date, 3, 8) 
+WHERE SUBSTR(membership_date, 1, 2) LIKE '_/';
+
+UPDATE club_member_info_cleansed 
+SET membership_date = SUBSTR(membership_date, 1, 3) || '0' || SUBSTR(membership_date, 4, 2) || SUBSTR(membership_date, 6, 8)
+WHERE SUBSTR(membership_date, 4, 2) LIKE '_/';
+
+UPDATE club_member_info_cleansed
+SET membership_date = SUBSTR(membership_date, 1, 6) || '20' || SUBSTR(membership_date, 9, 2)
+WHERE CAST(SUBSTR(membership_date, 7, 4) AS INTEGER) < 2000;
+```
