@@ -39,13 +39,19 @@ CREATE TABLE club_member_info_cleaned (
 INSERT INTO club_member_info_cleaned 
 SELECT * FROM club_member_info;
 ```
-## Solving the Inconsistent letter case
+## Clean Data
+### Solving the Inconsistent letter case
 ```sql
 UPDATE club_member_info_cleaned SET full_name = TRIM(full_name);
 UPDATE club_member_info_cleaned SET full_name = UPPER(full_name);
 ```
-## Solving the Age out of realistic range
+### Solving the Age out of realistic range
 ```sql
 UPDATE club_member_info_cleansed SET age =  CAST(SUBSTR(age, 1, 2) AS INTEGER) WHERE age > 90 AND age <> '';
 UPDATE club_member_info_cleansed SET age = 'NULL' WHERE age = '';
+```
+### Fixing the Matial_status
+```sql
+UPDATE club_member_info_cleansed SET martial_status = 'divorced' WHERE martial_status  = 'divored';
+UPDATE club_member_info_cleansed SET martial_status = 'NULL' WHERE martial_status  = '';
 ```
