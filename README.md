@@ -53,5 +53,5 @@ UPDATE club_member_info_cleansed SET age = 'NULL' WHERE age = '';
 ### Fixing the Matial_status
 ```sql
 UPDATE club_member_info_cleansed SET martial_status = 'divorced' WHERE martial_status  = 'divored';
-UPDATE club_member_info_cleansed SET martial_status = 'NULL' WHERE martial_status  = '';
+UPDATE club_member_info_cleansed SET martial_status = 'unknown' WHERE martial_status  = '';
 ```
