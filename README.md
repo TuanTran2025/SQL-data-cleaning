@@ -46,6 +46,6 @@ UPDATE club_member_info_cleaned SET full_name = UPPER(full_name);
 ```
 ## Solving the Age out of realistic range
 ```sql
-UPDATE club_member_info_cleaned SET age = CAST(SUBSTR(CAST(age AS TEXT), 1, 2) AS INTEGER) WHERE age > 90 AND age <> '';
-UPDATE club_member_info_cleaned SET age = 'NULL' WHERE age = '';
+UPDATE club_member_info_cleansed SET age =  CAST(SUBSTR(age, 1, 2) AS INTEGER) WHERE age > 90 AND age <> '';
+UPDATE club_member_info_cleansed SET age = 'NULL' WHERE age = '';
 ```
