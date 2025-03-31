@@ -208,7 +208,7 @@ SELECT
 	membership_date
 FROM club_member_info_duplicates_removed;
 ```
-### Data after Removing Duplications
+### Final Data after Removing Duplications
 ```sql
 SELECT * FROM club_member_info_duplicates_removed LIMIT 10;
 ```
