@@ -93,11 +93,12 @@ The result:
 |FEY KLOSS|52|married|fkloss9@godaddy.com|808-177-0318|8976 Jackson Park,Honolulu,Hawaii|Chemical Engineer|11/05/2014|
 
 ## Removing Duplicated Data
-### Create new table for removing duplications
+### Create new table with id_column for removing duplications
 ```sql
 -- club_member_info_duplicates_removed definition
 
 CREATE TABLE club_member_info_duplicates_removed (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	full_name VARCHAR(50),
 	age INTEGER,
 	martial_status VARCHAR(50),
@@ -110,6 +111,14 @@ CREATE TABLE club_member_info_duplicates_removed (
 ```
 ### Copy all values from cleaned table
 ```sql
-INSERT INTO club_member_info_duplicates_removed
+INSERT INTO club_member_info_duplicates_removed (
+	full_name,
+	age,
+	martial_status,
+	email,
+	phone,
+	full_address,
+	job_title,
+	membership_date)
 SELECT * FROM club_member_info_cleaned;
 ```
