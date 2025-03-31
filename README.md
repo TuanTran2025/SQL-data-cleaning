@@ -47,36 +47,36 @@ UPDATE club_member_info_cleaned SET full_name = UPPER(full_name);
 ```
 ### Solving the Age out of realistic range
 ```sql
-UPDATE club_member_info_cleansed SET age =  CAST(SUBSTR(age, 1, 2) AS INTEGER) WHERE age > 90 AND age <> '';
-UPDATE club_member_info_cleansed SET age = 'NULL' WHERE age = '';
+UPDATE club_member_info_cleaned SET age =  CAST(SUBSTR(age, 1, 2) AS INTEGER) WHERE age > 90 AND age <> '';
+UPDATE club_member_info_cleaned SET age = 'NULL' WHERE age = '';
 ```
 ### Fixing the Matial_status
 ```sql
-UPDATE club_member_info_cleansed SET martial_status = 'divorced' WHERE martial_status  = 'divored';
-UPDATE club_member_info_cleansed SET martial_status = 'unknown' WHERE martial_status  = '';
+UPDATE club_member_info_cleaned SET martial_status = 'divorced' WHERE martial_status  = 'divored';
+UPDATE club_member_info_cleaned SET martial_status = 'unknown' WHERE martial_status  = '';
 ```
 ### Fixing the Phone_number & Job_title
 ```sql
-UPDATE club_member_info_cleansed SET phone = 'unknown' WHERE LENGTH(phone) < 12;
-UPDATE club_member_info_cleansed SET job_title = 'NULL' WHERE job_title = '';
+UPDATE club_member_info_cleaned SET phone = 'unknown' WHERE LENGTH(phone) < 12;
+UPDATE club_member_info_cleaned SET job_title = 'NULL' WHERE job_title = '';
 ```
 ### Fixing the Membership_date
 ```sql
-UPDATE club_member_info_cleansed 
+UPDATE club_member_info_cleaned 
 SET membership_date = '0' || SUBSTR(membership_date, 1, 2) || SUBSTR(membership_date, 3, 8) 
 WHERE SUBSTR(membership_date, 1, 2) LIKE '_/';
 
-UPDATE club_member_info_cleansed 
+UPDATE club_member_info_cleaned 
 SET membership_date = SUBSTR(membership_date, 1, 3) || '0' || SUBSTR(membership_date, 4, 2) || SUBSTR(membership_date, 6, 8)
 WHERE SUBSTR(membership_date, 4, 2) LIKE '_/';
 
-UPDATE club_member_info_cleansed
+UPDATE club_member_info_cleaned
 SET membership_date = SUBSTR(membership_date, 1, 6) || '20' || SUBSTR(membership_date, 9, 2)
 WHERE CAST(SUBSTR(membership_date, 7, 4) AS INTEGER) < 2000;
 ```
 ## Data after Cleaning
 ```sql
-SELECT * FROM club_member_info_cleansed LIMIT 10;
+SELECT * FROM club_member_info_cleaned LIMIT 10;
 ```
 The result:
 |full_name|age|martial_status|email|phone|full_address|job_title|membership_date|
