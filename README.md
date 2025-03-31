@@ -157,7 +157,7 @@ JOIN (
 ON ud.email = sub.email
 WHERE ud.id > sub.id_min;
 ```
-### Step 5: FINALE. Deleting the duplicates
+### Step 5: Deleting the duplicates
 ```sql
 DELETE FROM club_member_info_duplicates_removed 
 WHERE id IN (
@@ -169,7 +169,46 @@ WHERE id IN (
 	ON ud.email = sub.email
 	WHERE ud.id > sub.id_min);
 ```
-## Data after Removing Duplications
+## Finale Data
+### Create new table for reseting id
+```sql
+-- club_member_info_final definition
+
+CREATE TABLE club_member_info_final (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,	
+	full_name VARCHAR(50),
+	age INTEGER,
+	martial_status VARCHAR(50),
+	email VARCHAR(50),
+	phone VARCHAR(50),
+	full_address VARCHAR(50),
+	job_title VARCHAR(50),
+	membership_date VARCHAR(50)
+);
+```
+### Copy all values from the duplicates_removed table
+```sql
+INSERT INTO club_member_info_final (
+	full_name,
+	age,
+	martial_status,
+	email,
+	phone,
+	full_address,
+	job_title,
+	membership_date)
+SELECT
+	full_name,
+	age,
+	martial_status,
+	email,
+	phone,
+	full_address,
+	job_title,
+	membership_date
+FROM club_member_info_duplicates_removed;
+```
+### Data after Removing Duplications
 ```sql
 SELECT * FROM club_member_info_duplicates_removed LIMIT 10;
 ```
