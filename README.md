@@ -92,7 +92,7 @@ The result:
 |MENDIE ALEXANDRESCU|46|single|malexandrescu8@state.gov|504-918-4753|34 Delladonna Terrace,New Orleans,Louisiana|Systems Administrator III|03/12/2021|
 |FEY KLOSS|52|married|fkloss9@godaddy.com|808-177-0318|8976 Jackson Park,Honolulu,Hawaii|Chemical Engineer|11/05/2014|
 
-## Data Duplications Removing
+## Preparing Data for Removing Duplications
 ### Create new table with id_column for removing duplications
 ```sql
 -- club_member_info_duplicates_removed definition
@@ -121,4 +121,51 @@ INSERT INTO club_member_info_duplicates_removed (
 	job_title,
 	membership_date)
 SELECT * FROM club_member_info_cleaned;
+```
+## Data Duplications Removing
+### Step #1: Retrieving the min id by email
+```sql
+SELECT email, MIN(id) 
+FROM club_member_info_duplicates_removed
+GROUP BY email;
+```
+### Step #2: Joining the min id to original table
+```sql
+SELECT * FROM club_member_info_duplicates_removed as ud
+JOIN (
+	SELECT email, MIN(id) 
+	FROM club_member_info_duplicates_removed
+	GROUP BY email) as sub
+ON ud.email = sub.email;
+```
+### Step #3: Eliminating the extra columns
+```sql
+SELECT ud.id, sub.id_min FROM club_member_info_duplicates_removed as ud
+JOIN (
+	SELECT email, MIN(id) as id_min 
+	FROM club_member_info_duplicates_removed
+	GROUP BY email) as sub
+ON ud.email = sub.email;
+```
+### Step #4: Retrieving only the duplicates’ IDs
+```sql
+SELECT ud.id, sub.id_min FROM club_member_info_duplicates_removed as ud
+JOIN (
+	SELECT email, MIN(id) as id_min 
+	FROM club_member_info_duplicates_removed
+	GROUP BY email) as sub
+ON ud.email = sub.email
+WHERE ud.id > sub.id_min;
+```
+### Step 5: FINALE. Deleting the duplicates
+```sql
+DELETE FROM club_member_info_duplicates_removed 
+WHERE id IN (
+	SELECT ud.id, sub.id_min FROM club_member_info_duplicates_removed as ud
+	JOIN (
+		SELECT email, MIN(id) as id_min 
+		FROM club_member_info_duplicates_removed
+		GROUP BY email) as sub
+	ON ud.email = sub.email
+	WHERE ud.id > sub.id_min);
 ```
