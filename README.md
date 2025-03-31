@@ -92,7 +92,7 @@ The result:
 |MENDIE ALEXANDRESCU|46|single|malexandrescu8@state.gov|504-918-4753|34 Delladonna Terrace,New Orleans,Louisiana|Systems Administrator III|03/12/2021|
 |FEY KLOSS|52|married|fkloss9@godaddy.com|808-177-0318|8976 Jackson Park,Honolulu,Hawaii|Chemical Engineer|11/05/2014|
 
-## Duplicated Data Removing
+## Data Duplications Removing
 ### Create new table with id_column for removing duplications
 ```sql
 -- club_member_info_duplicates_removed definition
