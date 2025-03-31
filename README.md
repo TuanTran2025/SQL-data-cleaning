@@ -95,9 +95,9 @@ The result:
 ## Copy Cleaned Table
 ### Create new table for removing duplications
 ```sql
--- club_member_duplicates_removed definition
+-- club_member_info_duplicates_removed definition
 
-CREATE TABLE club_member_duplicates_removed (
+CREATE TABLE club_member_info_duplicates_removed (
 	full_name VARCHAR(50),
 	age INTEGER,
 	martial_status VARCHAR(50),
